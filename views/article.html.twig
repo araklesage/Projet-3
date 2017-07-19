@@ -1,0 +1,89 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <div class="post-inner">
+        <div class="post-header">
+            <h1 class="post-title">{{ article.title }}
+            </h1> 
+            <div class="post-meta">
+                <p class="post-author"><span>By </span>Jean Forteroche</p>
+                <p class="post-date"><span>On </span>{{ article.date|date("d/m/Y") }}</p>
+
+
+            </div>
+            <!--/post-header-->
+        </div>
+        <div class="post-content">
+            <p>{{ article.content|raw }}</p>
+        </div>
+        <div class="clear"></div>
+        <!--/post-inner-->
+    </div>
+<!--/post-container-->
+</div>
+    <div class="comments-container">
+        <h3>Commentaires</h3>
+        <div class="comments-inner">
+            {%for comment in comments %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <strong> {{comment.author}}</strong> dit : {{ comment.content }}
+                    {%for subComment in comment.childComments %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <strong> {{comment.author}}</strong> dit : {{ subComment.content }}
+                            {%for subSubComment in subComment.childComments %}
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <strong> {{comment.author }}</strong> dit : {{ subSubComment.content }}
+                               </div>
+                            </div>
+                            {% endfor %}
+
+                       </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            
+            <p class="no-comments">Aucun commentaire.</p>
+            
+            {% endfor %}
+        </div>
+  	<hr>
+        <h3>Ajouter un commentaire</h3>
+        {% if commentForm %}
+        {{ form_start(commentForm) }}
+        <div class="form-group">
+            {{ form_widget(commentForm.author, { 'attr' : {
+                'rows' : '4',
+                'placeholder': 'Entrez votre pseudo'
+            }}) }}
+            <div class="form-group">
+            	{{ form_errors(commentForm.content) }}
+            	{{ form_widget(commentForm.content, { 'attr':  {
+            	'rows': '4',
+            	'class': 'form-control',
+            	'placeholder': 'Entrez votre commentaire'
+        	}}) }}
+        	</div>
+        </div>
+    </div>
+<div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Publier" />
+</div>
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+{% else %}
+<a href="{{ path('login') }} ">se connecter</a> pour commenter.
+{% endif %}
+</div>
+
+{% endblock %}

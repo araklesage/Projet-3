@@ -1,0 +1,33 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% for article in articles %}
+<article class="post-container">
+    <div class="post-inner">
+        <div class="post-header">
+            <h2>
+                <a class="post-title" href="{{ path('article', { 'id': article.id }) }}">{{ article.title }}</a>
+            </h2> 
+            <div class="post-meta">
+                <p class="post-author">
+                    <span>Par </span>
+                    <a href="{{ path('article', {'id': article.id}) }}" title="Posts by autor" rel="author">Jean Forteroche</a>
+                </p>
+                <p class="post-date">
+                    <span>le </span>
+                    <a>{{ article.date|date("d/m/Y") }}</a></p>
+            </div>
+            <!--/post-header-->
+        </div>
+        <div class="post-content">
+            <p>{{ article.content|raw }}</p>
+        </div>
+        <div class="clear"></div>
+        <!--/post-inner-->
+    </div>
+</article>
+
+{% endfor %}
+{% endblock %}

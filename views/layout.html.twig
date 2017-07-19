@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ asset('/lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/lovecraft-editor-styles.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/microcms.css') }}" rel="stylesheet">
+        <title>Blog Forteroche - {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="header-wrapper" role="navigation">
+                <div class="header section bg-white small-padding">
+                    <div class="section-inner">
+                        <h2 class="blog-title">
+                            <a href="{{ path('home') }}" title="Un billet simple pour l'Alaska" rel="home"> Un billet simple pour l'Alaska</a>
+                        </h2>
+                        <h4 class="blog-tagline"> Par Jean Forteroche </h4>
+                        <div class="clear"> </div>
+                    </div>
+
+                        {% for flashMessage in app.session.flashbag.get('succes') %}
+                        <div class="alert alert-success">
+                            {{ flashMessage }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+                {#<div class="toggles">
+                    <div class="nav-toggle toggle">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <div class="search-toggle toggle">
+                        <div class="genericon genericon-search"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>#}
+            </nav>
+            <div class="navigation bg-white no-padding">
+                <div class="section-inner">
+                    <ul class="mobile-menu" style="display: none;">
+                        <li class="page_histoire">
+                        <a href="{{ path('home') }}">L'histoire</a> 
+                        </li>
+                    </ul>
+                    <div class="mobile-search" style="display: none;">
+                
+                    <form method="get" class="search-form" id="search-form" action="https://wp-themes.com/">
+    <input class="search-field" placeholder="Search form" name="s" id="s" type="search"> 
+    <button type="submit" class="search-button"><div class="genericon genericon-search"></div></button>
+</form>             
+                </div>
+                
+                <ul class="main-menu">
+
+                    <li class="page_item page-item-46 page_item_has_children"><a href="{{ path('home') }}">L'Histoire</a>
+                    <ul class="children">
+                        <li class="page_item page-item-49"><a href="">Autour du l'histoire</a></li>
+                    </ul>
+                    </li>
+                    
+                </ul>
+                    <div class="clear"></div>
+                    <!--/section-inner-->
+                </div>
+                 <!--/navigation-->
+            </div>
+                <div class ="header-image bg-image" style="background-image: url('/MicroCMS/web/images/header.jpg')">
+                    <img src="{{ asset('/images/header.jpg') }}" alt="Alaska"/>
+                </div>
+                <div class="wrapper section">
+                    <div class="section-inner">
+                        <div class="content">
+                            <div id="posts" class="posts">{% block content %}{% endblock %}
+                            </div>
+                            <!--/posts-->
+                    </div>
+                    <!--/content-->
+                    <div class="sidebar">
+                        <div class="widgets">
+                            
+                            <div class="widget widget_user">
+                                <ul class="nav navbar-nav navbar-right">
+                            {% if app.user and is_granted('ROLE_ADMIN') %}
+                                    <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                            {% endif %}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-user"></span> Bienvenue, {{ app.user.username }} <b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                    <li><a href="{{ path('logout') }}">Déconnection</a></li>
+                                        </ul>
+                                    </li>
+                            {% else %}
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-user"></span> Non connecté <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('login') }}">Log in</a></li>
+                                        </ul>
+                                    </li>
+                            {% endif %}
+                                </ul>
+                            </div>
+                            <!--/widget_user-->
+                        </div>
+                        <!--/widgets-->
+                    </div>
+                    <!--/sidebar-->
+                    <div class="clear"></div>
+                    </div>
+                    <!--/section-inner-->
+                </div>
+                <!--/wrapper-->
+                <div class="credits section bg-dark">
+                    <div class="credits-inner section-inner">
+                        <p>
+                            Micro CMS crée par Grabette esteban
+                            <span class="sep">&</span>
+                            <span>
+                                thème par
+                                <a href="http:andersnoren.se">Anders Norén</a>
+                            </span>
+                        </p>
+                    </div>
+                    <!--/section-inner-->
+                </div>
+                <!--/crédits.section-->
+
+        <!-- jQuery -->
+        <script src="{{ asset('/lib/jquery/jquery.min.js') }}"></script>
+        <!-- JavaScript Boostrap plugin -->
+        <script src="{{ asset('/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
